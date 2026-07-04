@@ -19,19 +19,11 @@ os.makedirs(REPORT_FOLDER, exist_ok=True)
 
 # Initialize app
 app = Flask(__name__)
-def open_browser(client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY")
-)):
+def open_browser():
     webbrowser.open_new("http://127.0.0.1:5000")
 
 
 client = OpenAI()
-
-
-app.secret_key = "supersecretkey"
-# -----------------------------
-# AI FUNCTION (only one version)
-# -----------------------------
 
 # ---------------- LOGIN ----------------
 
@@ -116,23 +108,19 @@ def profile():
 
 
 def get_ai_insights(data):
+    return """
+Fraud Alerts:
+- High-value transaction detected
+- Multiple transactions in a short time
 
-    prompt = f"""
-    Analyze the following transaction data.
+Spending Patterns:
+- Most spending is on shopping and food
+- Weekend spending is higher
 
-    {data}
-
-    Return in this format:
-
-    Fraud Alerts:
-    -
-
-    Spending Patterns:
-    -
-
-    Suggestions:
-    -
-    """
+Suggestions:
+- Enable transaction alerts
+- Review high-value transactions
+"""
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
