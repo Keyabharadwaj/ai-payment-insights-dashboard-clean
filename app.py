@@ -11,6 +11,12 @@ from threading import Timer
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
 
+UPLOAD_FOLDER = "uploads"
+REPORT_FOLDER = "reports"
+
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(REPORT_FOLDER, exist_ok=True)
+
 # Initialize app
 app = Flask(__name__)
 def open_browser(client = OpenAI(
@@ -220,5 +226,6 @@ def download():
 # RUN APP
 # -----------------------------
 if __name__ == '__main__':
+    
     Timer(1, open_browser).start()
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=False)
