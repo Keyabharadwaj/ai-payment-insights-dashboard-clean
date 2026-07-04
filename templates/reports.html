@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<div class="d-flex justify-content-between mb-4">
+
+<div>
+
+<h2>Generated Reports</h2>
+
+<p class="text-muted">
+
+Download AI Generated PDF Reports
+
+</p>
+
+</div>
+
+<button
+
+class="btn btn-primary"
+
+onclick="downloadReport()">
+
+Generate PDF
+
+</button>
+
+</div>
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<table class="table table-hover">
+
+<thead>
+
+<tr>
+
+<th>Report Name</th>
+
+<th>Date</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>AI_Report.pdf</td>
+
+<td>Today</td>
+
+<td>
+
+<span class="badge bg-success">
+
+Ready
+
+</span>
+
+</td>
+
+<td>
+
+<button
+
+class="btn btn-success btn-sm"
+
+onclick="downloadReport()">
+
+Download
+
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+async function downloadReport(){
+
+const response = await fetch("/download",{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+content:localStorage.getItem("analysis")
+
+})
+
+});
+
+if(response.ok){
+
+window.location.href="/static/reports/AI_Report.pdf";
+
+}
+
+}
+
+</script>
+
+{% endblock %}

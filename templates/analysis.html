@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2>AI Transaction Analysis</h2>
+            <p class="text-muted">
+                AI-generated insights from uploaded transaction dataset.
+            </p>
+        </div>
+
+        <a href="/reports" class="btn btn-danger">
+            <i class="bi bi-file-earmark-pdf"></i>
+            Generate Report
+        </a>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-4 mb-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body">
+
+                    <h5 class="text-danger">
+                        🚨 Fraud Alerts
+                    </h5>
+
+                    <div id="fraudAlerts">
+
+                        Loading...
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4 mb-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body">
+
+                    <h5 class="text-primary">
+
+                        📈 Spending Pattern
+
+                    </h5>
+
+                    <div id="patterns">
+
+                        Loading...
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4 mb-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body">
+
+                    <h5 class="text-success">
+
+                        💡 Recommendations
+
+                    </h5>
+
+                    <div id="suggestions">
+
+                        Loading...
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-header">
+
+            Complete AI Response
+
+        </div>
+
+        <div class="card-body">
+
+            <pre id="analysisResult"></pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const result = localStorage.getItem("analysis");
+
+document.getElementById("analysisResult").innerText = result;
+
+// Split AI response into sections
+
+const fraud = result.match(/Fraud Alerts:(.*?)Spending Patterns:/s);
+
+const spending = result.match(/Spending Patterns:(.*?)Suggestions:/s);
+
+const suggestion = result.match(/Suggestions:(.*)/s);
+
+document.getElementById("fraudAlerts").innerHTML =
+fraud ? fraud[1].replace(/\n/g,"<br>") : "No Alerts";
+
+document.getElementById("patterns").innerHTML =
+spending ? spending[1].replace(/\n/g,"<br>") : "No Pattern";
+
+document.getElementById("suggestions").innerHTML =
+suggestion ? suggestion[1].replace(/\n/g,"<br>") : "No Suggestions";
+
+</script>
+
+{
+  "fraud_alerts": [
+    "Duplicate transactions detected",
+    "Large payment to unknown merchant"
+  ],
+  "spending_patterns": [
+    "High spending on travel",
+    "Weekend spending increased"
+  ],
+  "recommendations": [
+    "Enable transaction alerts",
+    "Review high-value transactions"
+  ],
+  "risk_score": 82,
+  "summary": "Several suspicious transactions require review."
+}
+
+{% endblock %}
