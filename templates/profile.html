@@ -2,6 +2,122 @@
 
 {% block content %}
 
-<h2>Analysis</h2>
+<div class="profile-container">
+
+    <div class="profile-header">
+
+        <div class="profile-left">
+
+            <div class="profile-avatar">
+                {{ username[0]|upper }}
+            </div>
+
+            <div class="profile-details">
+
+                <h2>{{ username }}</h2>
+
+                <p>Frontend Developer Intern</p>
+
+                <p>AI Payment Insights Dashboard</p>
+
+                <span class="status-badge">
+                    Active User
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="profile-grid">
+
+        <div class="profile-card">
+
+            <h3>{{ total_reports }}</h3>
+
+            <p>Total Reports</p>
+
+        </div>
+
+        <div class="profile-card">
+
+            <h3>100%</h3>
+
+            <p>Project Completion</p>
+
+        </div>
+
+        <div class="profile-card">
+
+            <h3>24</h3>
+
+            <p>Internship Weeks</p>
+
+        </div>
+
+        <div class="profile-card">
+
+            <h3>AI</h3>
+
+            <p>Dashboard Status</p>
+
+        </div>
+
+    </div>
+
+    <div class="info-section">
+
+        <h3>Profile Information</h3>
+
+        <div class="info-row">
+
+            <span class="info-title">Username</span>
+
+            <span class="info-value">{{ username }}</span>
+
+        </div>
+
+        <div class="info-row">
+
+            <span class="info-title">Role</span>
+
+            <span class="info-value">Frontend Developer</span>
+
+        </div>
+
+        <div class="info-row">
+
+            <span class="info-title">Project</span>
+
+            <span class="info-value">AI Payment Insights Dashboard</span>
+
+        </div>
+
+        <div class="info-row">
+
+            <span class="info-title">Technology</span>
+
+            <span class="info-value">
+                Flask, Python, HTML, CSS, JavaScript
+            </span>
+
+        </div>
+
+        <div class="profile-buttons">
+
+            <a href="/dashboard" class="btn btn-primary">
+                Dashboard
+            </a>
+
+            <a href="/history" class="btn btn-success">
+                History
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

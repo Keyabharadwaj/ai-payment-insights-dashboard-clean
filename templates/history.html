@@ -2,6 +2,40 @@
 
 {% block content %}
 
-<h2>History</h2>
+<h2>Analysis History</h2>
+
+{% if history %}
+
+<table class="table table-striped">
+
+<thead>
+<tr>
+<th>File Name</th>
+<th>Result</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for item in history %}
+
+<tr>
+<td>{{ item.filename }}</td>
+<td>{{ item.result }}</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% else %}
+
+<div class="alert alert-info">
+No analysis history available.
+</div>
+
+{% endif %}
 
 {% endblock %}

@@ -19,11 +19,14 @@ os.makedirs(REPORT_FOLDER, exist_ok=True)
 
 # Initialize app
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY", "my-super-secret-key-123")
 def open_browser():
     webbrowser.open_new("http://127.0.0.1:5000")
 
 
-client = OpenAI()
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY")
+)
 
 # ---------------- LOGIN ----------------
 
@@ -89,48 +92,48 @@ def reports():
     return render_template("reports.html")
 
 
-@app.route('/history')
+@app.route("/history")
 def history():
+    if "user" not in session:
+        return redirect("/login")
 
-    if 'user' not in session:
-        return redirect('/login')
+    history_data = session.get("history", [])
+    return render_template("history.html", history=history_data)
 
-    return render_template("history.html")
-
-
-@app.route('/profile')
+@app.route("/profile")
 def profile():
 
-    if 'user' not in session:
-        return redirect('/login')
+    if "user" not in session:
+        return redirect("/login")
 
-    return render_template("profile.html")
+    history = session.get("history", [])
 
+    return render_template(
+        "profile.html",
+        username=session["user"],
+        total_reports=len(history)
+    )
 
 def get_ai_insights(data):
-    return """
+
+    if client is None:
+        return """
 Fraud Alerts:
-- High-value transaction detected
-- Multiple transactions in a short time
+- Demo Mode
 
 Spending Patterns:
-- Most spending is on shopping and food
-- Weekend spending is higher
+- Demo Mode
 
 Suggestions:
-- Enable transaction alerts
-- Review high-value transactions
+- Configure an OpenAI API key.
 """
+
+    # Only runs if client exists
+    prompt = f"Analyze:\n{data}"
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
-
-        messages=[
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ]
+        messages=[{"role": "user", "content": prompt}]
     )
 
     return response.choices[0].message.content
